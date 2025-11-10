@@ -1,0 +1,43 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Sebas",
+      "email": "sebas@usb.edu.co",
+      "password": "1234"
+    },
+    {
+      "id": "fdd0",
+      "name": "Joan Sebastian Tunubala Sanchez",
+      "email": "jstunubalas@correo.usbcali.edu.co",
+      "password": "Sebas15"
+    },
+    {
+      "id": "f5c4",
+      "name": "Camilo",
+      "email": "camilo@usbcali.edu.co",
+      "password": "Camilo12"
+    },
+    {
+      "id": 1762740614207,
+      "name": "Luci",
+      "email": "Luci@gmail.com",
+      "password": "123l"
+    },
+    {
+      "id": 1762740798679,
+      "name": "Sandra",
+      "email": "sandra@gmail.com",
+      "password": "Sandra123"
+    }
+  ],
+  "objects": [
+    {
+      "id": 1,
+      "name": "Morral azul",
+      "description": "Perdido en el bloque A",
+      "image": "https://via.placeholder.com/150",
+      "user": "Sebas"
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+/* Variables de color institucional USB */
+:root {
+  --usb-orange: #EF7D00;
+  --usb-black: #1D1D1B;
+  --usb-grey-light: #F4F4F4;
+  --usb-white: #FFFFFF;
+}
+
+.home-container {
+  background-color: var(--usb-grey-light);
+  color: var(--usb-black);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, var(--usb-orange) 0%, var(--usb-black) 100%);
+  color: var(--usb-white);
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero-section .subtitle {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 12px 30px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Botón principal de naranja */
+.btn-primary {
+  background-color: var(--usb-white);
+  color: var(--usb-black);
+}
+
+.btn-primary:hover {
+  background-color: var(--usb-orange);
+  color: var(--usb-white);
+}
+
+/* Botón secundario estilo invertido */
+.btn-secondary {
+  background-color: transparent;
+  border: 2px solid var(--usb-white);
+  color: var(--usb-white);
+}
+
+.btn-secondary:hover {
+  background-color: var(--usb-white);
+  color: var(--usb-black);
+}
+
+.info-section {
+  padding: 60px 20px;
+  text-align: center;
+  background-color: var(--usb-white);
+}
+
+.info-section h2 {
+  color: var(--usb-orange);
+  font-size: 2rem;
+  margin-bottom: 40px;
+}
+
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: var(--usb-grey-light);
+  padding: 30px 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: var(--usb-orange);
+}
+
+.card h3 {
+  margin-bottom: 12px;
+  color: var(--usb-black);
+}
+
+.card p {
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: var(--usb-black);
+  color: var(--usb-white);
+}
+
+.footer p {
+  margin: 0;
+  font-size: 0.9rem;
+}

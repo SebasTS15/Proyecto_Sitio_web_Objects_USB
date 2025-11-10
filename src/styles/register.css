@@ -1,0 +1,188 @@
+:root {
+  --usb-orange: #EF7D00;
+  --usb-orange-light: #ffb066;
+  --usb-black: #1D1D1B;
+  --usb-white: #FFFFFF;
+  --usb-blur: rgba(255, 255, 255, 0.15);
+  --usb-border: rgba(255, 255, 255, 0.25);
+  --transition-fast: 0.25s ease;
+  --transition-medium: 0.4s ease;
+  --shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.55);
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+/* === CONTENEDOR PRINCIPAL === */
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background: linear-gradient(
+      rgba(29, 29, 27, 0.85),
+      rgba(29, 29, 27, 0.85)
+    ),
+    url("https://www.usb.edu.co/images/slider/home/usb_cali_aerea.jpg") center/cover no-repeat;
+  color: var(--usb-white);
+}
+
+/* === TARJETA DE REGISTRO === */
+.register-card {
+  background: var(--usb-blur);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--usb-border);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  padding: 45px 40px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  transition: all var(--transition-medium);
+}
+
+.register-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* === TITULOS Y TEXTOS === */
+.register-card h2 {
+  color: var(--usb-orange);
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+/* === FORMULARIO === */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  padding: 10px 14px;
+  transition: all var(--transition-fast);
+}
+
+.input-group:focus-within {
+  border-color: var(--usb-orange);
+  background: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 8px rgba(239, 125, 0, 0.6);
+}
+
+.input-group .icon {
+  margin-right: 10px;
+  color: var(--usb-orange);
+  flex-shrink: 0;
+}
+
+.input-group input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* === BOTÓN DE REGISTRO === */
+.register-btn {
+  background-color: var(--usb-orange);
+  color: var(--usb-white);
+  border: none;
+  border-radius: 12px;
+  padding: 13px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.register-btn:hover {
+  background-color: var(--usb-orange-light);
+  box-shadow: 0 0 12px rgba(239, 125, 0, 0.5);
+}
+
+.register-btn:active {
+  transform: scale(0.98);
+}
+
+/* === MENSAJES DE ERROR === */
+.error {
+  color: #ffb3b3;
+  background: rgba(255, 0, 0, 0.15);
+  border: 1px solid rgba(255, 0, 0, 0.25);
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-align: center;
+  animation: fadeIn 0.3s ease;
+}
+
+/* === REDIRECCIÓN AL LOGIN === */
+.login-redirect {
+  margin-top: 24px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.login-redirect a {
+  color: var(--usb-orange);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.login-redirect a:hover {
+  color: var(--usb-orange-light);
+}
+
+/* === ANIMACIONES === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 440px) {
+  .register-card {
+    padding: 35px 25px;
+  }
+
+  .register-card h2 {
+    font-size: 1.6rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+
+  .register-btn {
+    font-size: 0.95rem;
+    padding: 12px;
+  }
+}

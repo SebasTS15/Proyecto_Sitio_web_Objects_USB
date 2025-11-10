@@ -1,0 +1,110 @@
+:root {
+  --usb-orange: #EF7D00;
+  --usb-orange-light: #ffb066;
+  --usb-blue-dark: #002d5b;
+  --usb-gray-light: #f6f6f6;
+  --usb-white: #ffffff;
+  --usb-border: #e0e0e0;
+  --transition: 0.3s ease;
+}
+
+/* === TARJETA === */
+.object-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--usb-white);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.object-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* === IMAGEN === */
+.object-image {
+  width: 100%;
+  height: 180px;
+  background: var(--usb-gray-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.object-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-image {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+/* === CONTENIDO === */
+.object-content {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.object-title {
+  font-size: 1.1rem;
+  color: var(--usb-blue-dark);
+  margin: 0;
+}
+
+.object-description {
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.object-user {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+/* === BOTONES === */
+.object-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.edit-btn,
+.delete-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.edit-btn {
+  background-color: var(--usb-blue-dark);
+  color: var(--usb-white);
+}
+
+.edit-btn:hover {
+  background-color: #03438b;
+}
+
+.delete-btn {
+  background-color: var(--usb-orange);
+  color: var(--usb-white);
+}
+
+.delete-btn:hover {
+  background-color: var(--usb-orange-light);
+}

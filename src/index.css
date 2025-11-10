@@ -1,0 +1,20 @@
+/* Reset general */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Eliminar el límite de ancho del root */
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  background-color: #f1f5f9; /* mismo fondo claro */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Asegurar que toda la app ocupe el ancho completo */
+#root {
+  display: flex;
+  flex-direction: column;
+}

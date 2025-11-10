@@ -1,0 +1,165 @@
+:root {
+  --usb-orange: #EF7D00;
+  --usb-orange-light: #ffb066;
+  --usb-black: #1D1D1B;
+  --usb-white: #FFFFFF;
+  --usb-bg: #f5f5f5;
+  --usb-blur: rgba(255, 255, 255, 0.15);
+  --usb-border: rgba(255, 255, 255, 0.25);
+  --transition-fast: 0.2s ease;
+  --transition-medium: 0.35s ease;
+  --shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 12px 30px rgba(0, 0, 0, 0.55);
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--usb-bg);
+}
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+      rgba(29, 29, 27, 0.85),
+      rgba(29, 29, 27, 0.85)
+    ),
+    url("https://www.usb.edu.co/images/slider/home/usb_cali_aerea.jpg") center/cover no-repeat;
+  color: var(--usb-white);
+  padding: 20px;
+}
+
+.login-card {
+  background: var(--usb-blur);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--usb-border);
+  padding: 45px 40px;
+  border-radius: 20px;
+  max-width: 380px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow);
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+}
+
+.login-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-hover);
+}
+
+.login-card h2 {
+  color: var(--usb-orange);
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.subtitle {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input-group {
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+  color: #fff;
+  font-weight: 500;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  outline: none;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 1rem;
+  transition: all var(--transition-medium);
+}
+
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.95rem;
+}
+
+.input-group input:focus {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: var(--usb-orange);
+  transform: scale(1.02);
+  box-shadow: 0 0 10px rgba(239, 125, 0, 0.6);
+}
+
+.btn-login {
+  background-color: var(--usb-orange);
+  color: var(--usb-white);
+  border: none;
+  padding: 13px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-login:hover {
+  background-color: var(--usb-orange-light);
+  transform: scale(1.04);
+  box-shadow: 0 0 12px rgba(239, 125, 0, 0.5);
+}
+
+.btn-login:active {
+  transform: scale(0.98);
+}
+
+.register-link {
+  margin-top: 22px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.register-link span {
+  color: var(--usb-orange);
+  cursor: pointer;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+.register-link span:hover {
+  color: var(--usb-orange-light);
+}
+
+/* Responsivo */
+@media (max-width: 420px) {
+  .login-card {
+    padding: 35px 25px;
+    border-radius: 16px;
+  }
+
+  .login-card h2 {
+    font-size: 1.6rem;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+  }
+}
