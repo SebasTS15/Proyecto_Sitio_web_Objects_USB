@@ -103,3 +103,18 @@
 .form-group select option {
   color: var(--usb-blue-dark);
 }
+.object-form select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.object-form select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
+  outline: none;
+}

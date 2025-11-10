@@ -9,12 +9,12 @@ export default function ObjectForm({ isEditing = false, existingObject = null })
     description: "",
     category: "",
     building: "",
-    image: "",
+    image: "", // aquí guardamos la URL de Cloudinary
   });
 
+  const [uploading, setUploading] = useState(false);
   const navigate = useNavigate();
 
-  // 🧠 Rellenar datos si estamos editando
   useEffect(() => {
     if (existingObject) {
       setFormData({
@@ -28,21 +28,75 @@ export default function ObjectForm({ isEditing = false, existingObject = null })
   }, [existingObject]);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // 📸 Subida automática a Cloudinary
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "ml_default"); // cambia por tu upload preset
+    data.append("cloud_name", "dtecocbsi"); // cambia por tu cloud name
+
+    try {
+      const res = await fetch(
+        `https://api.cloudinary.com/v1_1/dtecocbsi/image/upload`,
+        { method: "POST", body: data }
+      );
+      const uploadRes = await res.json();
+      if (uploadRes.secure_url) {
+        setFormData((prev) => ({ ...prev, image: uploadRes.secure_url }));
+      } else {
+        alert("⚠️ No se pudo obtener la URL de la imagen");
+      }
+    } catch (error) {
+      console.error("Error al subir imagen:", error);
+      alert("❌ Error al subir la imagen");
+    } finally {
+      setUploading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const session = JSON.parse(localStorage.getItem("session"));
+      const currentUser = session?.user;
+
+      if (!currentUser) {
+        alert("⚠️ Debes iniciar sesión para publicar un objeto.");
+        navigate("/login");
+        return;
+      }
+
+      const newObject = {
+        name: formData.name,
+        description: formData.description,
+        category: formData.category,
+        building: formData.building,
+        image: formData.image || existingObject?.image || "",
+        userId: currentUser.id,
+        userEmail: currentUser.email,
+        userName: currentUser.name,
+      };
+
       if (isEditing) {
-        await updateObject(existingObject.id, formData);
+        await updateObject(existingObject.id, newObject);
         alert("✅ Objeto actualizado correctamente");
       } else {
-        await createObject(formData);
+        await createObject(newObject);
         alert("✅ Objeto publicado con éxito");
       }
+
       navigate("/dashboard");
     } catch (error) {
+      console.error(error);
       alert("❌ Error al guardar el objeto");
     }
   };
@@ -51,6 +105,7 @@ export default function ObjectForm({ isEditing = false, existingObject = null })
     <form className="object-form" onSubmit={handleSubmit}>
       <h3>{isEditing ? "Editar información del objeto" : "Nuevo objeto perdido"}</h3>
 
+      {/* Nombre */}
       <div className="form-group">
         <label>Nombre del objeto</label>
         <input
@@ -62,6 +117,7 @@ export default function ObjectForm({ isEditing = false, existingObject = null })
         />
       </div>
 
+      {/* Descripción */}
       <div className="form-group">
         <label>Descripción</label>
         <textarea
@@ -72,38 +128,66 @@ export default function ObjectForm({ isEditing = false, existingObject = null })
         />
       </div>
 
+      {/* Tipo / Categoría */}
       <div className="form-group">
-        <label>Categoría</label>
-        <input
-          type="text"
+        <label>Tipo de objeto</label>
+        <select
           name="category"
           value={formData.category}
           onChange={handleChange}
-        />
+          required
+        >
+          <option value="">Seleccionar tipo...</option>
+          <option value="Electrónico">Electrónico</option>
+          <option value="Ropa / Accesorio">Ropa / Accesorio</option>
+          <option value="Documentos">Documentos</option>
+          <option value="Llaves">Llaves</option>
+          <option value="Otros">Otros</option>
+        </select>
       </div>
 
+      {/* Edificio */}
       <div className="form-group">
-        <label>Edificio</label>
-        <input
-          type="text"
+        <label>Edificio o ubicación</label>
+        <select
           name="building"
           value={formData.building}
           onChange={handleChange}
-        />
+          required
+        >
+          <option value="">Seleccionar edificio...</option>
+          <option value="Cedro">Cedro</option>
+          <option value="Lago">Lago</option>
+          <option value="Ceresos">Ceresos</option>
+          <option value="Cafetería Central">Cafetería Central</option>
+          <option value="Cafetería Lago">Cafetería Lago</option>
+          <option value="Farallones">Farallones</option>
+          <option value="Higuerones 1">Higuerones 1</option>
+          <option value="Higuerones 2">Higuerones 2</option>
+          <option value="Parque Tecnológico">Parque Tecnológico</option>
+          <option value="Cancha">Cancha</option>
+          <option value="Naranjos">Naranjos</option>
+        </select>
       </div>
 
+      {/* Imagen */}
       <div className="form-group">
-        <label>URL de imagen</label>
-        <input
-          type="text"
-          name="image"
-          value={formData.image}
-          onChange={handleChange}
-        />
+        <label>Subir imagen</label>
+        <input type="file" accept="image/*" onChange={handleFileChange} />
+        {uploading && <p className="uploading-text">Subiendo imagen...</p>}
+
+        {(formData.image || existingObject?.image) && (
+          <div className="image-preview">
+            <img
+              src={formData.image || existingObject.image}
+              alt="Vista previa"
+            />
+          </div>
+        )}
       </div>
 
-      <button className="submit-btn" type="submit">
-        {isEditing ? "Guardar cambios" : "Publicar objeto"}
+      <button className="submit-btn" type="submit" disabled={uploading}>
+        {uploading ? "Cargando..." : isEditing ? "Guardar cambios" : "Publicar objeto"}
       </button>
     </form>
   );
