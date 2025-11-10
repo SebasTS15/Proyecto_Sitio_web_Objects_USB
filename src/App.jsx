@@ -4,8 +4,8 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
-import PrivateRoute from "./components/PrivateRouts";   // 👈 nuevo
-import { AuthProvider } from "./context/Autocontext";   // 👈 nuevo
+import PrivateRoute from "./components/PrivateRouts";  
+import { AuthProvider } from "./context/Autocontext";   
 
 function App() {
   return (

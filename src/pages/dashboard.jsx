@@ -8,7 +8,6 @@ import {
 import ObjectCard from "../components/ObjectCars";
 import ObjectForm from "../components/ObjectForm";
 import { useNavigate } from "react-router-dom";
-import { LogOut } from "lucide-react";
 import "../styles/Dashboard.css";
 
 export default function Dashboard() {
