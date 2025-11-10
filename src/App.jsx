@@ -4,8 +4,10 @@ import Home from "./pages/home";
 import Login from "./pages/login";
 import Register from "./pages/register";
 import Dashboard from "./pages/dashboard";
-import PrivateRoute from "./components/PrivateRouts";  
-import { AuthProvider } from "./context/Autocontext";   
+import ObjectFormPage from "./pages/ObjectFormPage"; // 👈 importar la nueva página
+import PrivateRoute from "./components/PrivateRouts";
+import { AuthProvider } from "./context/Autocontext";
+import ChatPage from "./pages/ChatPage";
 
 function App() {
   return (
@@ -13,7 +15,7 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          {/* 🔒 Ruta protegida */}
+          {/* 🔒 Rutas protegidas */}
           <Route
             path="/dashboard"
             element={
@@ -23,6 +25,31 @@ function App() {
             }
           />
 
+          <Route
+            path="/nuevo-objeto"
+            element={
+              <PrivateRoute>
+                <ObjectFormPage />
+              </PrivateRoute>
+            }
+          />
+          
+          <Route
+          path="/editar-objeto/:id"
+          element={
+            <PrivateRoute>
+              <ObjectFormPage isEditing={true} />
+            </PrivateRoute>
+            }
+          />
+          <Route
+            path="/chat/:id"
+            element={
+              <PrivateRoute>
+                <ChatPage />
+              </PrivateRoute>
+            }
+          />
           {/* 🏠 Rutas públicas */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />

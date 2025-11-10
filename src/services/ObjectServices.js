@@ -5,17 +5,9 @@ export const getObjects = async () => {
   return await res.json();
 };
 
-export const addObject = async (object) => {
-  const res = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(object),
-  });
-  return await res.json();
-};
-
 // 🟡 Crear objeto
 export const createObject = async (objectData) => {
+  console.log(objectData)
   const res = await fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

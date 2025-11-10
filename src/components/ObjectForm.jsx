@@ -1,72 +1,62 @@
 import { useState, useEffect } from "react";
+import { createObject, updateObject } from "../services/ObjectServices";
+import { useNavigate } from "react-router-dom";
 import "../styles/ObjectForm.css";
 
-export default function ObjectForm({ onSubmit, existingObject }) {
-  const [form, setForm] = useState({
+export default function ObjectForm({ isEditing = false, existingObject = null }) {
+  const [formData, setFormData] = useState({
     name: "",
     description: "",
+    category: "",
+    building: "",
     image: "",
   });
-  const [preview, setPreview] = useState("");
 
+  const navigate = useNavigate();
+
+  // 🧠 Rellenar datos si estamos editando
   useEffect(() => {
     if (existingObject) {
-      setForm(existingObject);
-      setPreview(existingObject.image);
+      setFormData({
+        name: existingObject.name || "",
+        description: existingObject.description || "",
+        category: existingObject.category || "",
+        building: existingObject.building || "",
+        image: existingObject.image || "",
+      });
     }
   }, [existingObject]);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setForm({ ...form, image: reader.result });
-        setPreview(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // 🧠 Obtener el usuario autenticado desde la sesión
-    const session = JSON.parse(localStorage.getItem("session"));
-    const currentUser = session?.user;
-
-    if (!currentUser) {
-      alert("⚠️ No hay sesión activa. Inicia sesión para publicar un objeto.");
-      return;
+    try {
+      if (isEditing) {
+        await updateObject(existingObject.id, formData);
+        alert("✅ Objeto actualizado correctamente");
+      } else {
+        await createObject(formData);
+        alert("✅ Objeto publicado con éxito");
+      }
+      navigate("/dashboard");
+    } catch (error) {
+      alert("❌ Error al guardar el objeto");
     }
-
-    // 🧩 Agregar el usuario al objeto antes de enviarlo
-    const newObject = {
-      ...form,
-      user: currentUser.name, // Guarda el nombre (podrías usar email si prefieres)
-    };
-
-    onSubmit(newObject);
-
-    // Resetear formulario
-    setForm({ name: "", description: "", image: "" });
-    setPreview("");
   };
 
   return (
     <form className="object-form" onSubmit={handleSubmit}>
-      <h3>{existingObject ? "Editar objeto" : "Publicar nuevo objeto"}</h3>
+      <h3>{isEditing ? "Editar información del objeto" : "Nuevo objeto perdido"}</h3>
 
       <div className="form-group">
         <label>Nombre del objeto</label>
         <input
+          type="text"
           name="name"
-          placeholder="Ej: USB Kingston negra"
-          value={form.name}
+          value={formData.name}
           onChange={handleChange}
           required
         />
@@ -76,23 +66,44 @@ export default function ObjectForm({ onSubmit, existingObject }) {
         <label>Descripción</label>
         <textarea
           name="description"
-          placeholder="Describe brevemente el objeto..."
-          value={form.description}
+          value={formData.description}
           onChange={handleChange}
           required
         />
       </div>
 
       <div className="form-group">
-        <label>Subir imagen</label>
-        <input type="file" accept="image/*" onChange={handleImageUpload} />
-        {preview && (
-          <img src={preview} alt="Vista previa" className="preview-image" />
-        )}
+        <label>Categoría</label>
+        <input
+          type="text"
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+        />
       </div>
 
-      <button type="submit" className="submit-btn">
-        {existingObject ? "Actualizar objeto" : "Publicar objeto"}
+      <div className="form-group">
+        <label>Edificio</label>
+        <input
+          type="text"
+          name="building"
+          value={formData.building}
+          onChange={handleChange}
+        />
+      </div>
+
+      <div className="form-group">
+        <label>URL de imagen</label>
+        <input
+          type="text"
+          name="image"
+          value={formData.image}
+          onChange={handleChange}
+        />
+      </div>
+
+      <button className="submit-btn" type="submit">
+        {isEditing ? "Guardar cambios" : "Publicar objeto"}
       </button>
     </form>
   );

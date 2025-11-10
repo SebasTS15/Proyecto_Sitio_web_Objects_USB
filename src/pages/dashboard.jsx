@@ -1,30 +1,23 @@
 import { useEffect, useState } from "react";
-import {
-  getObjects,
-  createObject,
-  updateObject,
-  deleteObject,
-} from "../services/ObjectServices";
+import { getObjects, deleteObject } from "../services/ObjectServices";
 import ObjectCard from "../components/ObjectCars";
-import ObjectForm from "../components/ObjectForm";
 import { useNavigate } from "react-router-dom";
 import "../styles/dashboard.css";
 
 export default function Dashboard() {
   const [objects, setObjects] = useState([]);
-  const [editing, setEditing] = useState(null);
+  const [myObjects, setMyObjects] = useState(false);
   const navigate = useNavigate();
 
+  const session = JSON.parse(localStorage.getItem("session"));
+  const currentUser = session?.user;
+
   useEffect(() => {
-    const session = JSON.parse(localStorage.getItem("session"));
     if (!session || Date.now() > session.expiresAt) {
       localStorage.removeItem("session");
       navigate("/login");
       return;
     }
-  }, [navigate]);
-
-  useEffect(() => {
     fetchObjects();
   }, []);
 
@@ -34,25 +27,6 @@ export default function Dashboard() {
       setObjects(data);
     } catch (err) {
       console.error("Error al cargar objetos:", err);
-    }
-  };
-
-  const handleCreate = async (objectData) => {
-    try {
-      await createObject(objectData);
-      fetchObjects();
-    } catch {
-      alert("Error al crear el objeto.");
-    }
-  };
-
-  const handleUpdate = async (objectData) => {
-    try {
-      await updateObject(editing.id, objectData);
-      setEditing(null);
-      fetchObjects();
-    } catch {
-      alert("Error al actualizar el objeto.");
     }
   };
 
@@ -66,35 +40,52 @@ export default function Dashboard() {
       }
     }
   };
+  const handleEdit = (object) => {
+  navigate(`/editar-objeto/${object.id}`, { state: { object } });
+  };
 
+
+  // ✅ Filtramos correctamente según el correo del usuario logueado
+  const filteredObjects = myObjects
+    ? objects.filter((obj) => obj.userEmail === currentUser?.email)
+    : objects;
 
   return (
     <div className="dashboard">
       <header className="dashboard-header">
         <h1>Panel de Objetos Perdidos</h1>
+
+        <div className="dashboard-actions">
+          <button className="btn" onClick={() => navigate("/nuevo-objeto")}>
+            ➕ Publicar nuevo objeto
+          </button>
+          <button className="btn" onClick={() => setMyObjects(!myObjects)}>
+            {myObjects ? "👀 Ver todos los objetos" : "📦 Mis objetos"}
+          </button>
+        </div>
       </header>
 
-      <section className="form-section">
-        <ObjectForm
-          onSubmit={editing ? handleUpdate : handleCreate}
-          existingObject={editing}
-        />
-      </section>
-
       <section className="object-section">
-        <h2 className="section-title">Objetos publicados</h2>
+        <h2 className="section-title">
+          {myObjects ? "Mis objetos publicados" : "Objetos perdidos"}
+        </h2>
+
         <div className="object-list">
-          {objects.length > 0 ? (
-            objects.map((obj) => (
+          {filteredObjects.length > 0 ? (
+            filteredObjects.map((obj) => (
               <ObjectCard
                 key={obj.id}
                 object={obj}
-                onEdit={(o) => setEditing(o)}
+                onEdit={handleEdit}
                 onDelete={handleDelete}
               />
             ))
           ) : (
-            <p className="empty-state">No hay objetos publicados todavía.</p>
+            <p className="empty-state">
+              {myObjects
+                ? "❌ No has publicado objetos aún."
+                : "😔 No hay objetos perdidos publicados."}
+            </p>
           )}
         </div>
       </section>

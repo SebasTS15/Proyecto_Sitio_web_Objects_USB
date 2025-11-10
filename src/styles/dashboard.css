@@ -114,3 +114,42 @@
     grid-template-columns: 1fr;
   }
 }
+/* === ACCIONES DEL DASHBOARD === */
+.dashboard-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.dashboard-actions .btn {
+  background-color: var(--usb-blue-dark);
+  color: var(--usb-white);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color var(--transition), transform var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dashboard-actions .btn:hover {
+  background-color: var(--usb-orange);
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .dashboard-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .dashboard-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
