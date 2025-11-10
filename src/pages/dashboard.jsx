@@ -8,7 +8,7 @@ import {
 import ObjectCard from "../components/ObjectCars";
 import ObjectForm from "../components/ObjectForm";
 import { useNavigate } from "react-router-dom";
-import "../styles/Dashboard.css";
+import "../styles/dashboard.css";
 
 export default function Dashboard() {
   const [objects, setObjects] = useState([]);
