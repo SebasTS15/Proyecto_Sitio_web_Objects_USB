@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+HEAD
 # Objects_USB
 =======
 # React + Vite
